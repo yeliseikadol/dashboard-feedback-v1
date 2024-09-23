@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <div class="heading">
+            <h1>Results</h1>
+            <div class="icon-button menu-button">
+                <span class="material-symbols-outlined">more_vert</span>
+                <div class="dropdown">
+                    <button class="secondary small" id="clearResultsButton">Clear Results</button>
+                </div>
+            </div>
+
+        </div>
+        <table class="results-table layer-01" id="resultsTable" border="0">
+            <thead>
+                <tr>
+                    <th class="string">Timestamp</th>
+                    <th class="string">Name</th>
+                    <th class="string comment">Comment</th>
+                    <th>Option 1</th>
+                    <th>Option 2</th>
+                    <th>Option 3</th>
+                    <th>Option 4</th>
+                    <th>Option 5</th>
+                    <th>Option 6</th>
+                    <th>Option 7</th>
+                    <th>Option 8</th>
+                    <th>Option 9</th>
+                    <th>Option 10</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Результаты будут вставлены сюда -->
+            </tbody>
+            <tfoot>
+                <!-- Результаты будут вставлены сюда -->
+            </tfoot>
+        </table>
+    </main>
+
+    <script>
+        const options = [
+            { name: "Custom Name 1" },
+            { name: "Custom Name 2" },
+            { name: "Custom Name 3" },
+            { name: "Custom Name 4" },
+            { name: "Custom Name 5" },
+            { name: "Custom Name 6" },
+            { name: "Custom Name 7" },
+            { name: "Custom Name 8" },
+            { name: "Custom Name 9" },
+            { name: "Custom Name 10" }
+        ];
+
+        async function fetchResults() {
+            const response = await fetch('/submissions');
+            const submissions = await response.json();
+
+            const checkboxCounts = Array(options.length).fill(0); // Массив для подсчета чекбоксов
+            const tableBody = document.querySelector('#resultsTable tbody');
+            const tableFooter = document.querySelector('#resultsTable tfoot');
+
+            submissions.forEach(submission => {
+                const row = document.createElement('tr');
+
+                // Имя и комментарий
+                const name = submission.name || 'Anonymous';
+                const comment = submission.comment || '';
+                const timestamp = submission.timeFormatted || 'Error'; // Форматируем дату и время
+
+                // Результаты чекбоксов
+                const checkboxResults = options.map((option, index) => {
+                    const checkbox = submission.checkboxes.find(cb => cb.name === option.name);
+                    const checked = checkbox ? checkbox.checked : false;
+                    checkboxCounts[index] += checked ? 1 : 0; // Увеличиваем счетчик, если чекбокс отмечен
+
+                    return checkbox ? (checkbox.checked ? '<span class="material-symbols-outlined icon checked">check</span>' : '<span class="material-symbols-outlined icon not-checked">close</span>') : '-'; // Если чекбокс не найден, считаем его неотмеченным
+                });
+
+
+
+                row.innerHTML = `
+                        <td>${timestamp}</td>
+                        <td>${name}</td>
+                        <td>${comment}</td>
+                        ${checkboxResults.map(result => `<td>${result}</td>`).join('')}
+                    `;
+
+                tableBody.appendChild(row);
+            });
+
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                ${checkboxCounts.map(count => `<td>${count}</td>`).join('')}
+                `;
+            tableFooter.appendChild(totalRow);
+        }
+
+        document.getElementById('clearResultsButton').addEventListener('click', async function () {
+            const password = prompt('Enter password:');
+            if (password === 'jfa1234') {
+
+
+                const response = await fetch('/clear', {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('All results cleared successfully!');
+                    document.querySelector('#resultsTable tbody').innerHTML = ''; // Очистка таблицы
+                    document.querySelector('#resultsTable tfoot').innerHTML = '';
+                } else {
+                    alert('Failed to clear results.');
+                }
+            } else {
+                alert('Incorrect password.');
+            }
+        });
+
+        fetchResults();
+    </script>
+</body>
+
+</html>
