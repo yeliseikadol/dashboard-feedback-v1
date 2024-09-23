@@ -10,15 +10,16 @@
     --background: #F2F2F7;
     --layer-01: #fff;
     --layer-02: ;
-    --ui-01: #78788030;
+    --ui-01: #40406030;
     --ui-01-hover: #78788050;
-    --text-01: #161616;
-    --text-field: #00000030;
+    --text-01: #1d1d1e;
+    --text-02: #787880;
+    --text-field: #1d1d1e30;
     --interactive: #2196f3;
     --interactive-hover: #0877d3;
     --on-interactive: #fff;
     --text-field-stroke: var(--text-field);
-    --text-field-stroke-hover: #161616;
+    --text-field-stroke-hover: #1d1d1e;
 
     --icon-secondary: #3c3c43aa;
     --icon-tertiary: #3c3c4355;
@@ -28,13 +29,22 @@
     --icon-error: var(--red);
 }
 
+
+html {
+    font-size: 17px;
+    color: var(--text-01);
+}
 div, textarea, input {
     box-sizing: border-box;
+}
+p {
+    line-height: 1.5;
 }
 
 .layer-01 {
     background-color: var(--layer-01);
 }
+
 .heading {
     display: flex;
     align-items: flex-end;
@@ -45,20 +55,26 @@ div, textarea, input {
 }
 body {
     background: var(--background);
-    font-size: 16px;
-    font-family: "Figtree";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;
     font-optical-sizing: auto;
     box-sizing: border-box;
 }
+
+input, textarea {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, button {
+    font-family: 'Figtree';
+    font-weight: 500;
+}
+
 main {
     margin: 3% auto;
     padding: 1rem;
     max-width: 1200px;
 }
-button, input, textarea {
-    font-family: "Figtree";
-    font-optical-sizing: auto;
-}
+
 
 h1 {
     margin: 0;
@@ -114,15 +130,32 @@ fieldset {
     }
 }
 
+.group {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
 .checkbox-container {
     margin-bottom: 1rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
+
+    &.level-2 {
+        margin-left: 2rem;
+    }
 
     label {
-        padding-left: 0.25rem;
+        margin-top: 2px;
+        padding-left: 0.5rem;
         cursor: pointer;
+
+        .checkbox-description {
+            margin-top: 0.25rem;
+            color: var(--text-02);
+            font-size: 0.9rem;
+        }
 
         &:hover {
             opacity: .7;
@@ -249,4 +282,18 @@ textarea {
 
 form {
     padding: 1rem;
+    legend {
+        font-weight: 500;
+    }
+    fieldset {
+        margin-top: 3rem;
+    }
+}
+
+.form-header {
+    margin-bottom: 3rem;
+    p {
+        max-width: 800px;
+        font-size: 1.2rem;
+    }
 }

@@ -10,21 +10,28 @@
 
 <body>
     <main class="index">
-        <h1>Feedback Form</h1>
+        
         <form id="feedbackForm" class="layer-01">
+            <div class="form-header">
+
+                <h1>Back-Office Feedback</h1>
+                <p>We are committed to enhancing your daily experience while working with clients in the back office. Currently, we are improving how information is displayed on the dashboard and in the client list. Below, you'll find the data we can display at this time.</p>
+                <p>If there is any other client information you'd like to see, please provide details in the comment section below the form.</p>
+            </div>
+
             <fieldset>
-                <legend>Choose your options:</legend>
+                <legend>Please select the information that is most important to you when accessing the back office</legend>
                 <div id="checkboxes" class="checkboxes">
                     <!-- Чекбоксы -->
                 </div>
             </fieldset>
             <fieldset>
                 <div class="textfield">
-                    <label>Name (optional):</label>
+                    <label>Name <span style="color: var(--text-02); font-size: 0.75rem">Optional</span></label>
                     <input type="text" id="name" name="name">
                 </div>
                 <div class="textfield">
-                    <label>Comment (optional):</label>
+                    <label>Any comments or feedback would be helpful <span style="color: var(--text-02); font-size: 0.75rem">Optional</span></label>
                     <textarea id="comment" name="comment"></textarea>
                 </div>
             </fieldset>
